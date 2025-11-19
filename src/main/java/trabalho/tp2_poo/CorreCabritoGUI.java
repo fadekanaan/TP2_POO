@@ -27,88 +27,51 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        CarcaraButton = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CorreCabrito");
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CabritoIcon.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cabrito2Icon.png"))); // NOI18N
         jButton1.setToolTipText("");
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 120, 110));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 90, 70));
 
-        jButton6.setBackground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("jButton6");
-        jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
-        jButton6.setContentAreaFilled(false);
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 110, 110));
+        CarcaraButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CarcaraIcon.png"))); // NOI18N
+        CarcaraButton.setToolTipText("");
+        CarcaraButton.setBorderPainted(false);
+        CarcaraButton.setContentAreaFilled(false);
+        CarcaraButton.addActionListener(this::CarcaraButtonActionPerformed);
+        jPanel2.add(CarcaraButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 90, 70));
+        CarcaraButton.getAccessibleContext().setAccessibleParent(jLabel1);
 
-        jButton7.setBackground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("jButton6");
-        jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
-        jButton7.setContentAreaFilled(false);
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 110, 110));
-
-        jButton8.setBackground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("jButton6");
-        jButton8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
-        jButton8.setContentAreaFilled(false);
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 110, 110));
-
-        jButton9.setBackground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("jButton6");
-        jButton9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
-        jButton9.setContentAreaFilled(false);
-        jButton9.addActionListener(this::jButton9ActionPerformed);
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 110, 110));
-
-        jButton10.setBackground(new java.awt.Color(255, 255, 255));
-        jButton10.setText("jButton6");
-        jButton10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
-        jButton10.setContentAreaFilled(false);
-        jButton10.addActionListener(this::jButton10ActionPerformed);
-        jPanel2.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, 110, 110));
         jPanel2.add(filler1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FundoIcon.png"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void CarcaraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarcaraButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_CarcaraButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,13 +99,10 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CarcaraButton;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
