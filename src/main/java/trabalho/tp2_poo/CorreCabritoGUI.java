@@ -3,9 +3,12 @@ package trabalho.tp2_poo;
 
 /**
  *
- * @author Fade
+ * @author Fade Hassan Husein Kanaan
+ * @author Rodrigo Thoma da Silva
  */
 public class CorreCabritoGUI extends javax.swing.JFrame {
+    
+    private Jogo jogo;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CorreCabritoGUI.class.getName());
 
@@ -14,7 +17,79 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
      */
     public CorreCabritoGUI() {
         initComponents();
+        
+        jogo=new Jogo();
+        
+        atualizarTela();
     }
+    
+    private void atualizarTela() {
+        // A. Limpa todos os botões (remove os ícones)
+        btnTopo.setIcon(null);
+        btnEsquerdaSuperior.setIcon(null);
+        btnDireitaSuperior.setIcon(null);
+        btnEsquerdaInferior.setIcon(null);
+        btnDireitaInferior.setIcon(null);
+        btnCentro.setIcon(null);
+
+        // B. Define os ícones (Carregue as imagens aqui)
+        // DICA: Certifique-se que os caminhos "/images/..." estão certos no seu projeto
+        javax.swing.Icon iconCabrito = new javax.swing.ImageIcon(getClass().getResource("/images/Cabrito2Icon.png"));
+        javax.swing.Icon iconCarcara = new javax.swing.ImageIcon(getClass().getResource("/images/CarcaraIcon.png"));
+
+        // C. Pega as posições atuais do "Cérebro"
+        int posCabrito = jogo.getPosicaoCabrito();
+        int posCarcara = jogo.getPosicaoCarcara();
+
+        // D. Desenha o Cabrito no lugar certo
+        getBotaoPorId(posCabrito).setIcon(iconCabrito);
+
+        // E. Desenha o Carcará no lugar certo
+        getBotaoPorId(posCarcara).setIcon(iconCarcara);
+        
+        // F. Verifica vitória e mostra mensagem
+        if (jogo.isJogoAcabou()) {
+            javax.swing.JOptionPane.showMessageDialog(this, jogo.getVencedor());
+            // Opcional: Bloquear cliques ou reiniciar
+        }
+    }
+
+    // Ajudante para converter ID (0, 1, 2...) no Botão real
+    private javax.swing.JButton getBotaoPorId(int id) {
+        switch (id) {
+            case Jogo.TOPO: return btnTopo;
+            case Jogo.ESQ_SUP: return btnEsquerdaSuperior;
+            case Jogo.DIR_SUP: return btnDireitaSuperior;
+            case Jogo.ESQ_INF: return btnEsquerdaInferior;
+            case Jogo.DIR_INF: return btnDireitaInferior;
+            case Jogo.CENTRO: return btnCentro;
+            default: return null;
+        }
+    }
+    
+    private void tentarMover(int destino) {
+        try {
+            // 1. Descobre quem vai mover (Origem automática baseada no turno)
+            int origem;
+            if (jogo.isVezDoCabrito()) {
+                origem = jogo.getPosicaoCabrito();
+            } else {
+                origem = jogo.getPosicaoCarcara();
+            }
+
+            // 2. Tenta realizar a jogada no backend
+            jogo.realizarJogada(origem, destino);
+            
+            // 3. Se não deu erro, atualiza a interface
+            atualizarTela();
+            
+        } catch (MovimentoInvalidoException e) {
+            // 4. Se o movimento for proibido, avisa o usuário
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,12 +122,22 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         btnTopo.setToolTipText("");
         btnTopo.setBorderPainted(false);
         btnTopo.setContentAreaFilled(false);
+        btnTopo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTopoMouseClicked(evt);
+            }
+        });
         btnTopo.addActionListener(this::btnTopoActionPerformed);
         jPanel2.add(btnTopo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 90, 70));
 
         btnEsquerdaSuperior.setToolTipText("");
         btnEsquerdaSuperior.setBorderPainted(false);
         btnEsquerdaSuperior.setContentAreaFilled(false);
+        btnEsquerdaSuperior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEsquerdaSuperiorMouseClicked(evt);
+            }
+        });
         btnEsquerdaSuperior.addActionListener(this::btnEsquerdaSuperiorActionPerformed);
         jPanel2.add(btnEsquerdaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 90, 70));
 
@@ -61,6 +146,11 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         btnEsquerdaInferior.setBorder(null);
         btnEsquerdaInferior.setBorderPainted(false);
         btnEsquerdaInferior.setContentAreaFilled(false);
+        btnEsquerdaInferior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEsquerdaInferiorMouseClicked(evt);
+            }
+        });
         btnEsquerdaInferior.addActionListener(this::btnEsquerdaInferiorActionPerformed);
         jPanel2.add(btnEsquerdaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 90, 70));
 
@@ -81,6 +171,11 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         btnDireitaSuperior.setBorder(null);
         btnDireitaSuperior.setBorderPainted(false);
         btnDireitaSuperior.setContentAreaFilled(false);
+        btnDireitaSuperior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDireitaSuperiorMouseClicked(evt);
+            }
+        });
         btnDireitaSuperior.addActionListener(this::btnDireitaSuperiorActionPerformed);
         jPanel2.add(btnDireitaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 90, 70));
 
@@ -89,6 +184,11 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         btnDireitaInferior.setBorder(null);
         btnDireitaInferior.setBorderPainted(false);
         btnDireitaInferior.setContentAreaFilled(false);
+        btnDireitaInferior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDireitaInferiorMouseClicked(evt);
+            }
+        });
         btnDireitaInferior.addActionListener(this::btnDireitaInferiorActionPerformed);
         jPanel2.add(btnDireitaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, 90, 70));
 
@@ -125,8 +225,28 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDireitaInferiorActionPerformed
 
     private void btnCentroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCentroMouseClicked
-
+        tentarMover(Jogo.CENTRO);
     }//GEN-LAST:event_btnCentroMouseClicked
+
+    private void btnTopoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTopoMouseClicked
+        tentarMover(Jogo.TOPO);
+    }//GEN-LAST:event_btnTopoMouseClicked
+
+    private void btnEsquerdaSuperiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEsquerdaSuperiorMouseClicked
+        tentarMover(Jogo.ESQ_SUP);
+    }//GEN-LAST:event_btnEsquerdaSuperiorMouseClicked
+
+    private void btnDireitaSuperiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDireitaSuperiorMouseClicked
+        tentarMover(Jogo.DIR_SUP);
+    }//GEN-LAST:event_btnDireitaSuperiorMouseClicked
+
+    private void btnEsquerdaInferiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEsquerdaInferiorMouseClicked
+        tentarMover(Jogo.ESQ_INF);
+    }//GEN-LAST:event_btnEsquerdaInferiorMouseClicked
+
+    private void btnDireitaInferiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDireitaInferiorMouseClicked
+       tentarMover(Jogo.DIR_INF);
+    }//GEN-LAST:event_btnDireitaInferiorMouseClicked
 
     /**
      * @param args the command line arguments
