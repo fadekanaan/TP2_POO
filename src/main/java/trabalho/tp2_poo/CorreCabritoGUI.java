@@ -26,9 +26,12 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        CarcaraButton = new javax.swing.JButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
+        btnTopo = new javax.swing.JButton();
+        btnEsquerdaSuperior = new javax.swing.JButton();
+        btnEsquerdaInferior = new javax.swing.JButton();
+        btnCentro = new javax.swing.JButton();
+        btnDireitaSuperior = new javax.swing.JButton();
+        btnDireitaInferior = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -40,22 +43,54 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cabrito2Icon.png"))); // NOI18N
-        jButton1.setToolTipText("");
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 90, 70));
+        btnTopo.setForeground(new java.awt.Color(60, 63, 65));
+        btnTopo.setToolTipText("");
+        btnTopo.setBorderPainted(false);
+        btnTopo.setContentAreaFilled(false);
+        btnTopo.addActionListener(this::btnTopoActionPerformed);
+        jPanel2.add(btnTopo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 90, 70));
 
-        CarcaraButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/CarcaraIcon.png"))); // NOI18N
-        CarcaraButton.setToolTipText("");
-        CarcaraButton.setBorderPainted(false);
-        CarcaraButton.setContentAreaFilled(false);
-        CarcaraButton.addActionListener(this::CarcaraButtonActionPerformed);
-        jPanel2.add(CarcaraButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 90, 70));
-        CarcaraButton.getAccessibleContext().setAccessibleParent(jLabel1);
+        btnEsquerdaSuperior.setToolTipText("");
+        btnEsquerdaSuperior.setBorderPainted(false);
+        btnEsquerdaSuperior.setContentAreaFilled(false);
+        btnEsquerdaSuperior.addActionListener(this::btnEsquerdaSuperiorActionPerformed);
+        jPanel2.add(btnEsquerdaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 90, 70));
 
-        jPanel2.add(filler1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, -1, -1));
+        btnEsquerdaInferior.setBackground(new java.awt.Color(255, 255, 255));
+        btnEsquerdaInferior.setForeground(new java.awt.Color(60, 63, 65));
+        btnEsquerdaInferior.setBorder(null);
+        btnEsquerdaInferior.setBorderPainted(false);
+        btnEsquerdaInferior.setContentAreaFilled(false);
+        btnEsquerdaInferior.addActionListener(this::btnEsquerdaInferiorActionPerformed);
+        jPanel2.add(btnEsquerdaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, 90, 70));
+
+        btnCentro.setForeground(new java.awt.Color(255, 255, 255));
+        btnCentro.setBorder(null);
+        btnCentro.setBorderPainted(false);
+        btnCentro.setContentAreaFilled(false);
+        btnCentro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCentroMouseClicked(evt);
+            }
+        });
+        btnCentro.addActionListener(this::btnCentroActionPerformed);
+        jPanel2.add(btnCentro, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 90, 70));
+
+        btnDireitaSuperior.setBackground(new java.awt.Color(255, 255, 255));
+        btnDireitaSuperior.setForeground(new java.awt.Color(60, 63, 65));
+        btnDireitaSuperior.setBorder(null);
+        btnDireitaSuperior.setBorderPainted(false);
+        btnDireitaSuperior.setContentAreaFilled(false);
+        btnDireitaSuperior.addActionListener(this::btnDireitaSuperiorActionPerformed);
+        jPanel2.add(btnDireitaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 220, 90, 70));
+
+        btnDireitaInferior.setBackground(new java.awt.Color(255, 255, 255));
+        btnDireitaInferior.setForeground(new java.awt.Color(60, 63, 65));
+        btnDireitaInferior.setBorder(null);
+        btnDireitaInferior.setBorderPainted(false);
+        btnDireitaInferior.setContentAreaFilled(false);
+        btnDireitaInferior.addActionListener(this::btnDireitaInferiorActionPerformed);
+        jPanel2.add(btnDireitaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 440, 90, 70));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FundoIcon.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
@@ -65,13 +100,33 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnTopoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTopoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnTopoActionPerformed
 
-    private void CarcaraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CarcaraButtonActionPerformed
+    private void btnEsquerdaSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsquerdaSuperiorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CarcaraButtonActionPerformed
+    }//GEN-LAST:event_btnEsquerdaSuperiorActionPerformed
+
+    private void btnEsquerdaInferiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsquerdaInferiorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEsquerdaInferiorActionPerformed
+
+    private void btnCentroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCentroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCentroActionPerformed
+
+    private void btnDireitaSuperiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDireitaSuperiorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDireitaSuperiorActionPerformed
+
+    private void btnDireitaInferiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDireitaInferiorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDireitaInferiorActionPerformed
+
+    private void btnCentroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCentroMouseClicked
+
+    }//GEN-LAST:event_btnCentroMouseClicked
 
     /**
      * @param args the command line arguments
@@ -99,9 +154,12 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CarcaraButton;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCentro;
+    private javax.swing.JButton btnDireitaInferior;
+    private javax.swing.JButton btnDireitaSuperior;
+    private javax.swing.JButton btnEsquerdaInferior;
+    private javax.swing.JButton btnEsquerdaSuperior;
+    private javax.swing.JButton btnTopo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
