@@ -1,4 +1,3 @@
-
 package trabalho.tp2_poo;
 
 /**
@@ -7,10 +6,10 @@ package trabalho.tp2_poo;
  * @author Rodrigo Thoma da Silva
  */
 public class CorreCabritoGUI extends javax.swing.JFrame {
-    
+
     private Jogo jogo;
     private boolean modoSuperPuloAtivo = false;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CorreCabritoGUI.class.getName());
 
     /**
@@ -20,18 +19,23 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         initComponents();
 
         configurarMenus();
-        
-        jPanel2.remove(jLabel3); 
-               
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 530, 800, 40));           
+
+        jPanel2.remove(jLabel3);
+
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 530, 800, 40));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel2.setComponentZOrder(jLabel3, 0);
-        
-        jogo=new Jogo();
-        
+
+        jogo = new Jogo();
+
         atualizarTela();
     }
-    
+
+    /**
+     * Atualiza a interface gráfica com base no estado atual do objeto Jogo.
+     * Este método redesenha os ícones nas posições corretas, atualiza as
+     * mensagens de turno e verifica se houve condição de vitória.
+     */
     private void atualizarTela() {
         // Limpa ícones e bordas de todos os botões
         javax.swing.JButton[] todosBotoes = {btnTopo, btnEsquerdaSuperior, btnDireitaSuperior, btnEsquerdaInferior, btnDireitaInferior, btnCentro};
@@ -45,7 +49,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         // Carrega e define os ícones das peças
         javax.swing.Icon iconCabrito = new javax.swing.ImageIcon(getClass().getResource("/images/Cabrito2Icon.png"));
         javax.swing.Icon iconCarcara = new javax.swing.ImageIcon(getClass().getResource("/images/CarcaraIcon.png"));
-         
+
         int posCabrito = jogo.getPosicaoCabrito();
         int posCarcara = jogo.getPosicaoCarcara();
 
@@ -54,7 +58,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
         btnCabrito.setIcon(iconCabrito);
         btnCarcara.setIcon(iconCarcara);
-            
+
         jLabel3.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Centraliza texto
 
@@ -65,7 +69,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
             jLabel3.setText("Vez do Carcará");
             jLabel3.setForeground(java.awt.Color.RED); // Vermelho
         }
-        
+
         // Aplica o Destaque Amarelo (Borda Redonda) na peça da vez
         javax.swing.border.Border destaque = new BordaRedonda(java.awt.Color.YELLOW, 5);
 
@@ -80,7 +84,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         // Lógica do Botão Super Pulo
         boolean turnoCabrito = jogo.isVezDoCabrito();
         boolean temPoder = jogo.isSuperPuloDisponivel();
-        
+
         btnSuperPulo.setEnabled(turnoCabrito && temPoder);
 
         if (modoSuperPuloAtivo && turnoCabrito && temPoder) {
@@ -91,51 +95,52 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
             // Visual do botao ja usado
             btnSuperPulo.setBackground(new java.awt.Color(255, 255, 102)); // Seu amarelo original
             btnSuperPulo.setText(temPoder ? "Super Pulo" : "JÁ USADO");
-            
+
             // Se perdeu o poder ou passou a vez, desativa o modo automaticamente
             if (!turnoCabrito || !temPoder) {
                 modoSuperPuloAtivo = false;
             }
         }
-        
+
         // Fim de Jogo
         if (jogo.isJogoAcabou()) {
-            
+
             javax.swing.Icon iconeFim = new javax.swing.ImageIcon(getClass().getResource("/images/vitoria.png"));
             Object[] opcoes = {"Reiniciar", "Sair"};
-            
+
             int escolha = javax.swing.JOptionPane.showOptionDialog(
-                this, 
-                jogo.getVencedor() + "\n\nO que deseja fazer?", 
-                "Fim de Jogo",                              
-                javax.swing.JOptionPane.YES_NO_OPTION,          
-                javax.swing.JOptionPane.PLAIN_MESSAGE, //  PLAIN para o ícone personalizado aparecer bem       
-                iconeFim, 
-                opcoes,                                         
-                opcoes[0]                                       
+                    this,
+                    jogo.getVencedor() + "\n\nO que deseja fazer?",
+                    "Fim de Jogo",
+                    javax.swing.JOptionPane.YES_NO_OPTION,
+                    javax.swing.JOptionPane.PLAIN_MESSAGE, //  PLAIN para o ícone personalizado aparecer bem       
+                    iconeFim,
+                    opcoes,
+                    opcoes[0]
             );
 
-            if (escolha == 0) {          
+            if (escolha == 0) {
                 reiniciarJogo();
-            } else {              
+            } else {
                 System.exit(0);
             }
         }
     }
+
     private void configurarMenus() {
         jMenuBar1.removeAll();
-        
+
         jMenu1.removeAll();
         jMenu2.removeAll();
 
         // Configurando Menu Jogo jMenu1
-        jMenu1.setText("Jogo"); 
-        
+        jMenu1.setText("Jogo");
+
         // Item Reiniciar
         javax.swing.JMenuItem itemReiniciar = new javax.swing.JMenuItem("Reiniciar");
         itemReiniciar.addActionListener(evt -> reiniciarJogo());
         jMenu1.add(itemReiniciar);
-        
+
         // Item Regras (dentro do menu Jogo)
         javax.swing.JMenuItem itemRegras = new javax.swing.JMenuItem("Regras");
         itemRegras.addActionListener(evt -> {
@@ -150,27 +155,27 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, regras, "Regras", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         });
         jMenu1.add(itemRegras);
-        
+
         jMenu1.addSeparator(); // Linha separadora
 
         // Item Sair
         javax.swing.JMenuItem itemSair = new javax.swing.JMenuItem("Sair");
-        itemSair.addActionListener(evt -> System.exit(0)); 
+        itemSair.addActionListener(evt -> System.exit(0));
         jMenu1.add(itemSair);
 
         // Configurando Menu Autoria jMenu2
-        jMenu2.setText("Autoria"); 
-        
+        jMenu2.setText("Autoria");
+
         javax.swing.JMenuItem itemNomes = new javax.swing.JMenuItem("Ver nomes");
         itemNomes.addActionListener(evt -> {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Autores do Trabalho:\n\nFade Hassan Husein Kanaan\nRodrigo Thoma da Silva");
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Autores do Trabalho:\n\nFade Hassan Husein Kanaan\nRodrigo Thoma da Silva");
         });
-        jMenu2.add(itemNomes); 
-        
+        jMenu2.add(itemNomes);
+
         jMenuBar1.add(jMenu1);
         jMenuBar1.add(jMenu2);
-        
+
         jMenuBar1.revalidate();
         jMenuBar1.repaint();
     }
@@ -178,18 +183,31 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     // Ajudante para converter ID (0, 1, 2...) no Botão real do jogo
     private javax.swing.JButton getBotaoPorId(int id) {
         switch (id) {
-            case Jogo.TOPO: return btnTopo;
-            case Jogo.ESQ_SUP: return btnEsquerdaSuperior;
-            case Jogo.DIR_SUP: return btnDireitaSuperior;
-            case Jogo.ESQ_INF: return btnEsquerdaInferior;
-            case Jogo.DIR_INF: return btnDireitaInferior;
-            case Jogo.CENTRO: return btnCentro;
-            default: return null;
+            case Jogo.TOPO:
+                return btnTopo;
+            case Jogo.ESQ_SUP:
+                return btnEsquerdaSuperior;
+            case Jogo.DIR_SUP:
+                return btnDireitaSuperior;
+            case Jogo.ESQ_INF:
+                return btnEsquerdaInferior;
+            case Jogo.DIR_INF:
+                return btnDireitaInferior;
+            case Jogo.CENTRO:
+                return btnCentro;
+            default:
+                return null;
         }
     }
-    
+
+    /**
+     * Método centralizador que recebe a ação de clique de qualquer botão do
+     * tabuleiro. Ele conecta a interação do usuário (Front-end) com a lógica de
+     * validação (Back-end).
+     */
     private void tentarMover(int destino) {
         try {
+            // Determina automaticamente a origem com base em de quem é a vez
             int origem;
             if (jogo.isVezDoCabrito()) {
                 origem = jogo.getPosicaoCabrito();
@@ -199,13 +217,13 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
             if (jogo.isVezDoCabrito()) {
                 boolean ehVizinho = jogo.saoVizinhos(origem, destino);
-                
+
                 // Se for a própria casa, ele pula esse IF e vai pro backend dar o erro certo.
                 if (!ehVizinho && !modoSuperPuloAtivo && origem != destino) {
-                    
-                    javax.swing.JOptionPane.showMessageDialog(this, 
-                        "Para pular para longe, clique no botão 'SUPER PULO' primeiro!", 
-                        "Atenção", javax.swing.JOptionPane.WARNING_MESSAGE);
+
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Para pular para longe, clique no botão 'SUPER PULO' primeiro!",
+                            "Atenção", javax.swing.JOptionPane.WARNING_MESSAGE);
                     return; // Cancela e não chama o backend
                 }
             }
@@ -213,70 +231,73 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
             // Tenta realizar a jogada no backend
             jogo.realizarJogada(origem, destino);
-            
+
             // Se a jogada deu certo, reseta o botão (para não ficar ligado pra sempre)
-            modoSuperPuloAtivo = false; 
-            
+            modoSuperPuloAtivo = false;
+
             atualizarTela();
-            
+
         } catch (MovimentoInvalidoException e) {
             javax.swing.JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     private void reiniciarJogo() {
         // Reseta a lógica
         jogo.reiniciar();
         // Reseta a visualização
         atualizarTela();
     }
-    
-      /* começo de codigo gerado por IA */
+
+    /* começo de codigo gerado por IA */
+    /**
+     * Classe utilitária para desenhar bordas circulares personalizadas nos
+     * botões.
+     */
     class BordaRedonda implements javax.swing.border.Border {
-    private int espessura;
-    private java.awt.Color cor;
 
-    public BordaRedonda(java.awt.Color cor, int espessura) {
-        this.cor = cor;
-        this.espessura = espessura;
+        private int espessura;
+        private java.awt.Color cor;
+
+        public BordaRedonda(java.awt.Color cor, int espessura) {
+            this.cor = cor;
+            this.espessura = espessura;
+        }
+
+        @Override
+        public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) {
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
+            // Ativa o anti-aliasing para o círculo não ficar serrilhado
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+            g2.setColor(cor);
+            g2.setStroke(new java.awt.BasicStroke(espessura));
+
+            // CÁLCULO DE TAMANHO MÁXIMO:
+            // Pega o menor lado do botão e desconta a espessura para a borda caber inteira dentro
+            int diametro = Math.min(width, height) - espessura;
+
+            // Centraliza perfeitamente
+            int xCentro = x + (width - diametro) / 2;
+            int yCentro = y + (height - diametro) / 2;
+
+            g2.drawOval(xCentro, yCentro, diametro, diametro);
+        }
+
+        @Override
+        public java.awt.Insets getBorderInsets(java.awt.Component c) {
+            // RETORNAR 0 AQUI É O SEGREDO:
+            // Isso diz ao botão: "Não diminua a imagem do cabrito, eu vou desenhar a borda por cima/em volta"
+            return new java.awt.Insets(0, 0, 0, 0);
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return false;
+        }
     }
 
-    @Override
-    public void paintBorder(java.awt.Component c, java.awt.Graphics g, int x, int y, int width, int height) {
-        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
-        // Ativa o anti-aliasing para o círculo não ficar serrilhado
-        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        g2.setColor(cor);
-        g2.setStroke(new java.awt.BasicStroke(espessura));
-        
-        // CÁLCULO DE TAMANHO MÁXIMO:
-        // Pega o menor lado do botão e desconta a espessura para a borda caber inteira dentro
-        int diametro = Math.min(width, height) - espessura;
-        
-        // Centraliza perfeitamente
-        int xCentro = x + (width - diametro) / 2;
-        int yCentro = y + (height - diametro) / 2;
-        
-        g2.drawOval(xCentro, yCentro, diametro, diametro);
-    }
-
-    @Override
-    public java.awt.Insets getBorderInsets(java.awt.Component c) {
-        // RETORNAR 0 AQUI É O SEGREDO:
-        // Isso diz ao botão: "Não diminua a imagem do cabrito, eu vou desenhar a borda por cima/em volta"
-        return new java.awt.Insets(0, 0, 0, 0);
-    }
-
-    @Override
-    public boolean isBorderOpaque() {
-        return false;
-    }
-}
     /* fim de codigo gerado por IA */
-    
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -464,13 +485,13 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEsquerdaInferiorMouseClicked
 
     private void btnDireitaInferiorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDireitaInferiorMouseClicked
-       tentarMover(Jogo.DIR_INF);
+        tentarMover(Jogo.DIR_INF);
     }//GEN-LAST:event_btnDireitaInferiorMouseClicked
 
     private void btnSuperPuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuperPuloActionPerformed
-            if (jogo.isVezDoCabrito() && jogo.isSuperPuloDisponivel()) {
+        if (jogo.isVezDoCabrito() && jogo.isSuperPuloDisponivel()) {
             modoSuperPuloAtivo = !modoSuperPuloAtivo; // Toggle do botao
-            atualizarTela(); 
+            atualizarTela();
         }    }//GEN-LAST:event_btnSuperPuloActionPerformed
 
     /**
