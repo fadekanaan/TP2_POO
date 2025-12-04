@@ -17,7 +17,7 @@ public class Jogo {
     private int posicaoCabrito;
     private int posicaoCarcara;
     private boolean turnoCabrito; // true = vez do Cabrito, false = vez do Carcará
-    private boolean superPuloDisponivel; // O cabrito tem 1 super pulo
+    private boolean superPuloDisponivel; // O cabrito tem só 1 super pulo no jogo inteirio
     private boolean jogoAcabou;
     private int contadorJogadas;
     
@@ -31,9 +31,9 @@ public class Jogo {
     };
     
     public Jogo() {
-        // Cabrito começa, Posições iniciais fixas, Super Pulo ativo.
+        // Cabrito começa, posicoes fixas
         this.posicaoCabrito = TOPO;
-        this.posicaoCarcara = ESQ_SUP; // Conforme imagem 1 do PDF
+        this.posicaoCarcara = ESQ_SUP; 
         this.turnoCabrito = true; 
         this.superPuloDisponivel = true;
         this.jogoAcabou = false;
@@ -53,20 +53,24 @@ public class Jogo {
         return jogoAcabou;
     }
     
-    public String getVencedor() { 
-        if (!jogoAcabou) {
-            return "Jogo em andamento";
-        }
-        return turnoCabrito ? "Carcará (Capturou!)" : "Cabrito (Sobreviveu)"; 
+    public String getVencedor() {
+    if (!jogoAcabou) {
+        return "Jogo em andamento";
+    }
+    String resultado = !turnoCabrito ? "Carcará capturou o coitado!" : "Cabrito nunca sobreviveu...";
+    
+    return resultado + "\nTotal de jogadas: " + contadorJogadas;
     }
     
     public void validarMovimento(int origem, int destino) throws MovimentoInvalidoException {
-        // --- Regras Gerais ---
         if (jogoAcabou) {
             throw new MovimentoInvalidoException("O jogo acabou!");
         }
+      
+        if (origem == destino) {
+            throw new MovimentoInvalidoException("Mova para uma casa diferente!!!");
+        }
         
-        // Verifica se a origem bate com a peça da vez
         if (turnoCabrito && origem != posicaoCabrito) {
             throw new MovimentoInvalidoException("É a vez do Cabrito! Mova a peça certa.");
         }
@@ -74,35 +78,34 @@ public class Jogo {
             throw new MovimentoInvalidoException("É a vez do Carcará! Mova a peça certa.");
         }
 
-        // --- Regras Específicas do CABRITO ---
+        // Regras Específicas do CABRITO 
         if (turnoCabrito) {
-            // Cabrito NÃO pode ir para onde o Carcará está (suicídio não permitido)
+            // Cabrito nao pode ir pra onde o Carcará está
             if (destino == posicaoCarcara) {
-                throw new MovimentoInvalidoException("Você não pode ir para onde o Carcará está!");
+                throw new MovimentoInvalidoException("Você não pode se matar :)");
             }
             
-            // Verifica conexões
             if (!saoVizinhos(origem, destino)) {
-                // Se não é vizinho, só pode se for Super Pulo
+                // Só pode Super pulo daí, se nao for vizinho
                 if (!superPuloDisponivel) {
-                    throw new MovimentoInvalidoException("Movimento inválido! Casas não conectadas.");
+                    throw new MovimentoInvalidoException("Movimento inválido! Apenas casas vizinhas!");
                 }
-                // Se chegou aqui, é um Super Pulo válido (destino vazio e tem poder)
             }
         } 
         
-        // --- Regras Específicas do CARCARÁ ---
+        // Regras Específicas do CARCARÁ
         else {
-            // Carcará DEVE ser vizinho (não tem super pulo)
+            // Carcará deve ser vizinho (não tem super pulo)
             if (!saoVizinhos(origem, destino)) {
-                throw new MovimentoInvalidoException("O Carcará só voa para casas conectadas!");
+                throw new MovimentoInvalidoException("O Carcará só voa para casas vizinhas!");
             }
-            // Nota: Carcará PODE ir para o destino == posicaoCabrito (Isso é a captura)
+            // destino == posicaoCabrito (isso é a captura)
         }
     }
+        
     
     // Verifica se dois pontos são conectados por uma linha direta
-    private boolean saoVizinhos(int origem, int destino) {
+    public boolean saoVizinhos(int origem, int destino) {
         for (int vizinho : adjacencias[origem]) {
             if (vizinho == destino) {
                 return true;
@@ -110,19 +113,19 @@ public class Jogo {
         }
         return false;
     }
+
+    public boolean isSuperPuloDisponivel() {
+        return superPuloDisponivel;
+    }
     
     public void realizarJogada(int origem, int destino) throws MovimentoInvalidoException {
-        // 1. Primeiro, garantimos que o movimento é legal
+      
         validarMovimento(origem, destino);
 
-        // 2. Lógica se for a vez do CABRITO
-        if (turnoCabrito) {
-            // Verifica se foi um movimento normal ou Super Pulo
-            boolean ehVizinho = saoVizinhos(origem, destino);
-            
+        if (turnoCabrito) {  
+            boolean ehVizinho = saoVizinhos(origem, destino);     
             if (!ehVizinho) {
-                // Se não é vizinho e passou da validação, é Super Pulo!
-                // Então descontamos o poder especial.
+              
                 superPuloDisponivel = false;
             }
             
@@ -130,9 +133,9 @@ public class Jogo {
             posicaoCabrito = destino;
         } 
         
-        // 3. Lógica se for a vez do CARCARÁ
+       
         else {
-            // Se o Carcará moveu para onde o Cabrito está -> CAPTURA!
+            // Se o Carcará moveu para onde o Cabrito está, jogo acaba!
             if (destino == posicaoCabrito) {
                 jogoAcabou = true;
             }
@@ -141,16 +144,19 @@ public class Jogo {
             posicaoCarcara = destino;
         }
 
-        // 4. Finalização do Turno
         contadorJogadas++; // Conta a jogada
         
         if (!jogoAcabou) {
-            turnoCabrito = !turnoCabrito; // Troca a vez (Inverte o booleano)
-        }
+            turnoCabrito = !turnoCabrito; // Troca a vez (inverte o boolean)
+        }   
     }
     
-    
-    
-    
-    
+    public void reiniciar() {
+    this.posicaoCabrito = TOPO;
+    this.posicaoCarcara = ESQ_SUP;
+    this.turnoCabrito = true;
+    this.superPuloDisponivel = true;
+    this.jogoAcabou = false;
+    this.contadorJogadas = 0;
+    }
 }
