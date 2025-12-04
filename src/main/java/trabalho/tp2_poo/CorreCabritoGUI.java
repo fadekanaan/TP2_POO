@@ -109,7 +109,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
                 jogo.getVencedor() + "\n\nO que deseja fazer?", 
                 "Fim de Jogo",                              
                 javax.swing.JOptionPane.YES_NO_OPTION,          
-                javax.swing.JOptionPane.PLAIN_MESSAGE, // Usei PLAIN para o ícone personalizado aparecer bem       
+                javax.swing.JOptionPane.PLAIN_MESSAGE, //  PLAIN para o ícone personalizado aparecer bem       
                 iconeFim, 
                 opcoes,                                         
                 opcoes[0]                                       
