@@ -21,13 +21,19 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
         configurarMenus();
         
+        jPanel2.remove(jLabel3); 
+               
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 530, 800, 40));           
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel2.setComponentZOrder(jLabel3, 0);
+        
         jogo=new Jogo();
         
         atualizarTela();
     }
     
     private void atualizarTela() {
-        // 1. Limpa ícones e bordas de todos os botões
+        // Limpa ícones e bordas de todos os botões
         javax.swing.JButton[] todosBotoes = {btnTopo, btnEsquerdaSuperior, btnDireitaSuperior, btnEsquerdaInferior, btnDireitaInferior, btnCentro};
 
         for (javax.swing.JButton btn : todosBotoes) {
@@ -36,10 +42,10 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
             btn.setBorderPainted(false); // Garante que não pinte borda padrão quadrada
         }
 
-        // 2. Carrega e define os ícones das peças
+        // Carrega e define os ícones das peças
         javax.swing.Icon iconCabrito = new javax.swing.ImageIcon(getClass().getResource("/images/Cabrito2Icon.png"));
         javax.swing.Icon iconCarcara = new javax.swing.ImageIcon(getClass().getResource("/images/CarcaraIcon.png"));
-
+         
         int posCabrito = jogo.getPosicaoCabrito();
         int posCarcara = jogo.getPosicaoCarcara();
 
@@ -48,9 +54,19 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
         btnCabrito.setIcon(iconCabrito);
         btnCarcara.setIcon(iconCarcara);
+            
+        jLabel3.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 24));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Centraliza texto
 
-        // 3. Aplica o Destaque Amarelo (Borda Redonda) na peça da vez
-        // Obs: Isso depende da classe BordaRedonda estar no final do arquivo
+        if (jogo.isVezDoCabrito()) {
+            jLabel3.setText("Vez do Cabrito");
+            jLabel3.setForeground(new java.awt.Color(34, 139, 34)); // Verde Floresta
+        } else {
+            jLabel3.setText("Vez do Carcará");
+            jLabel3.setForeground(java.awt.Color.RED); // Vermelho
+        }
+        
+        // Aplica o Destaque Amarelo (Borda Redonda) na peça da vez
         javax.swing.border.Border destaque = new BordaRedonda(java.awt.Color.YELLOW, 5);
 
         if (jogo.isVezDoCabrito()) {
@@ -61,7 +77,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
             btnCarcara.setBorderPainted(true);
         }
 
-        // 4. Lógica do Botão Super Pulo
+        // Lógica do Botão Super Pulo
         boolean turnoCabrito = jogo.isVezDoCabrito();
         boolean temPoder = jogo.isSuperPuloDisponivel();
         
@@ -82,7 +98,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
             }
         }
         
-        // 5. Fim de Jogo
+        // Fim de Jogo
         if (jogo.isJogoAcabou()) {
             
             javax.swing.Icon iconeFim = new javax.swing.ImageIcon(getClass().getResource("/images/vitoria.png"));
@@ -273,6 +289,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnSuperPulo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         btnTopo = new javax.swing.JButton();
         btnEsquerdaSuperior = new javax.swing.JButton();
         btnEsquerdaInferior = new javax.swing.JButton();
@@ -302,6 +319,9 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
 
         jLabel2.setText("Clique para ativar (1 USO)");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, -1, -1));
+
+        jLabel3.setText("Vez do Cabrito");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 540, -1, -1));
 
         btnTopo.setForeground(new java.awt.Color(60, 63, 65));
         btnTopo.setToolTipText("");
@@ -488,6 +508,7 @@ public class CorreCabritoGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnTopo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
